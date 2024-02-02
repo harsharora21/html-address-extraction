@@ -15,15 +15,21 @@ print("Welcome to Spazer\n")
 with open('cities.txt', 'r') as f:
 	cities = f.read()
 
-cities = cities.split()
+cities = cities.split('\n')
 cities = [city.lower() for city in cities]
+# print('amritsar' in cities)
 
 def getcities(text):
 	text_s = text.lower()
 	cityinds_t = []
+
+	# print('amritsar' in cities)
 	# print(cities[:100])
 	for city in cities:
-		citylist = re.finditer(r',(.|\n){,10}'+re.escape(city)+r'[^0-9a-zA-Z]', text_s)
+		citylist = re.finditer(r',(.|\n){,15}'+re.escape(city), text_s)
+
+		# if [l.end(0) for l in citylist]:
+		# 	print(city)
 
 		cityinds_t += [l.end(0) for l in citylist]
 
@@ -52,7 +58,7 @@ def getcities(text):
 keywords = ["address", "contact"]
 
 
-for x in range(0):
+for x in range(10):
 	filename = str(x) + ".html"
 	file = pathlib.Path('input/' + filename)
 	if (file.exists()):
@@ -87,7 +93,7 @@ for x in range(0):
 		matchinds = [match.end(0) for match in matchlist]
 
 		for ind in matchinds:
-			temp_output = output[max(0, ind-200):min(ind+10, len(output))]
+			temp_output = output[max(0, ind-200):min(ind+15, len(output))]
 			# temp_ind = temp_output.index("\n\n")
 			# print(output[ind-200:ind], '\n\n\nNext Address:')
 
@@ -99,7 +105,7 @@ for x in range(0):
 		# add.append("NEXT PART STARTS \n\n\n\n\n\n")
 
 		for ind in cityinds:
-			temp_output = output[max(0, ind-190):min(ind+20, len(output))]
+			temp_output = output[max(0, ind-190):min(ind+25, len(output))]
 			# temp_ind = temp_output.index("\n\n")
 			# print(output[ind-200:ind], '\n\n\nNext Address:')
 
@@ -108,6 +114,7 @@ for x in range(0):
 			# print(''*(len(temp_output))+)
 			output = output.replace(temp_output, ' '*(len(temp_output)))
 
+		# break
 		
 		for i in range(len(add)):
 			if bool(re.match(r'^\s*$', add[i])):
@@ -116,7 +123,7 @@ for x in range(0):
 		# print(len(add))
 		# break
 
-		output = '\n'.join(add)
+		output = '\n<br><br>\n'.join(add)
 
 
 		#Your code ends  #################################			  
